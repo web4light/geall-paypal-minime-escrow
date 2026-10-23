@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../projekty/UTL-Universal-Streaming-Dubbing"
+		},
+		{
+			"path": "../../projekty"
+		}
+	],
+	"settings": {
+		"kiroAgent.terminalCommandTimeout": 1
+	}
+}

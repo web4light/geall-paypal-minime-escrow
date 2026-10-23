@@ -1,0 +1,8 @@
+{
+  "name": "SPARK Automate - Workflow Studio",
+  "description": "Visual workflow automation platform for Ada/SPARK formal verification with multi-app integrations and Gemini AI agent.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
