@@ -1,8 +1,5 @@
 {
-  "name": "SPARK Automate - Workflow Studio",
-  "description": "Visual workflow automation platform for Ada/SPARK formal verification with multi-app integrations and Gemini AI agent.",
-  "requestFramePermissions": [],
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
+  "name": "G(E)A(L)L",
+  "description": "G(E)A(L)L — Sovereign visual workflow automation and formal verification studio powered by Panoramiks (Ada), Asterisk (SPARK), and Obelisk (GNATprove) for BlackBerry QNX SDP 8.0.",
+  "requestFramePermissions": []
 }

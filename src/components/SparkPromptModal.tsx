@@ -39,13 +39,13 @@ export const SparkPromptModal: React.FC<SparkPromptModalProps> = ({ isOpen, onCl
               </div>
               <div>
                 <h2 className="text-lg font-bold text-[#EDEDED] flex items-center gap-2">
-                  Ada/SPARK Code Agent – Systémový Prompt
+                  G(E)A(L)L: Panoramiks & Asterisk – Systémová Pravidla
                   <span className="text-xs px-2 py-0.5 rounded-full bg-[#00FF85]/15 text-[#00FF85] border border-[#00FF85]/30 font-mono">
-                    gnatprove Verified
+                    Obelisk Verified (QNX 8.0)
                   </span>
                 </h2>
                 <p className="text-xs text-[#71717A]">
-                  Přesný systémový prompt garantující 100% formální verifikaci bez chyb
+                  10 nepřekročitelných pravidel Asterisk (SPARK) pro jazyk Panoramiks (Ada) a verifikátor Obelisk (GNATprove)
                 </p>
               </div>
             </div>

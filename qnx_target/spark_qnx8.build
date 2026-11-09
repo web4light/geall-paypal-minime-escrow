@@ -1,0 +1,51 @@
+# =========================================================================
+# spark_qnx8.build — QNX SDP 8.0 Image File System (mkifs) Buildfile
+# Boots QNX Neutrino 8.0 Microkernel (procnto-smp-instr) + SPARK Guard
+# =========================================================================
+
+[virtual=x86_64,bios +compress] boot = {
+    startup-x86
+    PATH=/proc/boot:/bin:/usr/bin:/sbin:/usr/sbin
+    LD_LIBRARY_PATH=/proc/boot:/lib:/usr/lib:/lib/dll
+    procnto-smp-instr -v
+}
+
+[+script] startup-script = {
+    procmgr_symlink ../../proc/boot/libc.so.5 /usr/lib/ldqnx-64.so.2
+
+    display_msg "========================================================"
+    display_msg " QNX SDP 8.0 Neutrino RTOS — SPARK Automate Guard Node"
+    display_msg " Formal Verification: 100% Proved (GNATprove + CVC5)"
+    display_msg "========================================================"
+
+    slogger2
+    pipe
+    devc-ser8250 -e -F -b115200 &
+    waitfor /dev/ser1
+
+    reopen /dev/ser1
+
+    display_msg "[BOOT] Starting /dev/spark_guard POSIX Resource Manager..."
+    spark_qnx_resmgr_x86_64 &
+    waitfor /dev/spark_guard 5
+
+    [+session] sh &
+}
+
+[type=link] /bin/sh=/proc/boot/ksh
+[type=link] /dev/console=/dev/ser1
+[type=link] /tmp=/dev/shmem
+
+libc.so
+libgcc_s.so.1
+
+[data=c]
+devc-ser8250
+slogger2
+pipe
+ksh
+cat
+ls
+pidin
+sin
+spark_qnx_resmgr_x86_64

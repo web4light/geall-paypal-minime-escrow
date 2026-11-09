@@ -4,14 +4,15 @@ import {
   Activity,
   FileCode,
   ShieldAlert,
+  ShieldCheck,
   Layers,
-  FolderOpen,
   Download,
   Upload,
   Plus,
-  CheckCircle2,
-  Sparkles,
-  Github,
+  RotateCcw,
+  Cpu,
+  GitBranch,
+  Zap,
 } from "lucide-react";
 import { Workflow } from "../types";
 import { WORKFLOW_TEMPLATES } from "../data/templates";
@@ -60,13 +61,13 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#F27D26] to-[#D96B1C] flex items-center justify-center shadow-lg shadow-[#F27D26]/25 text-[#050505] font-black text-sm">
-            SP
+            GL
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-sm text-[#EDEDED] tracking-tight">SPARK Automate</span>
+              <span className="font-bold text-sm text-[#EDEDED] tracking-tight">G(E)A(L)L</span>
               <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#F27D26]/15 text-[#F27D26] font-mono border border-[#F27D26]/30">
-                n8n + Ada/SPARK
+                Panoramiks · Asterisk · Obelisk · QNX 8.0
               </span>
             </div>
           </div>
@@ -106,19 +107,48 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <span className="text-[10px] text-[#A1A1AA] line-clamp-1">{tmpl.description}</span>
                 </button>
               ))}
-              <div className="pt-1 border-t border-[#1A1A1A] flex items-center justify-between px-2">
+              <div className="pt-1.5 border-t border-[#1A1A1A] flex flex-col gap-1 px-2">
+                <button
+                  onClick={() => {
+                    onSelectTemplate(WORKFLOW_TEMPLATES[0]);
+                    setShowTemplatesMenu(false);
+                  }}
+                  className="text-[11px] text-[#38BDF8] hover:text-[#7DD3FC] font-medium flex items-center gap-1.5 py-1"
+                >
+                  <RotateCcw className="w-3 h-3" /> Obnovit výchozí 8-uzlové workflow
+                </button>
                 <button
                   onClick={() => {
                     onNewWorkflow();
                     setShowTemplatesMenu(false);
                   }}
-                  className="text-[11px] text-[#F27D26] hover:text-[#FFA057] font-medium flex items-center gap-1 py-1"
+                  className="text-[11px] text-[#F27D26] hover:text-[#FFA057] font-medium flex items-center gap-1.5 py-1"
                 >
                   <Plus className="w-3 h-3" /> Vytvořit čisté workflow
                 </button>
               </div>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Status Badges */}
+      <div className="hidden lg:flex items-center gap-2">
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#38BDF8]/10 text-[#38BDF8] border border-[#38BDF8]/25 text-xs font-mono font-medium">
+          <Cpu className="w-3.5 h-3.5" />
+          <span>{currentWorkflow.nodes.length} Uzlů</span>
+        </div>
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#00FF85]/10 text-[#00FF85] border border-[#00FF85]/25 text-xs font-mono font-medium">
+          <GitBranch className="w-3.5 h-3.5" />
+          <span>{currentWorkflow.edges.length} Spojení</span>
+        </div>
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#F27D26]/10 text-[#F27D26] border border-[#F27D26]/25 text-xs font-mono font-medium">
+          <ShieldCheck className="w-3.5 h-3.5" />
+          <span>Obelisk Rules 10/10</span>
+        </div>
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#A855F7]/10 text-[#A855F7] border border-[#A855F7]/25 text-xs font-mono font-medium">
+          <Zap className="w-3.5 h-3.5 text-[#A855F7]" />
+          <span>QNX 8.0 / DO-178C</span>
         </div>
       </div>
 
@@ -134,20 +164,20 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         <button
           onClick={onOpenPromptModal}
-          title="Zobrazit Ada/SPARK Systémový Prompt"
+          title="Zobrazit Asterisk / Panoramiks Systémová Pravidla"
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#F27D26]/10 hover:bg-[#F27D26]/20 border border-[#F27D26]/30 text-xs font-semibold text-[#F27D26] transition-colors"
         >
           <ShieldAlert className="w-3.5 h-3.5 text-[#F27D26]" />
-          <span className="hidden md:inline">SPARK Prompt</span>
+          <span className="hidden md:inline">Asterisk Pravidla</span>
         </button>
 
         <button
           onClick={onOpenCodeDrawer}
-          title="Zobrazit vygenerovaný Ada kód a formální audit"
+          title="Zobrazit vygenerovaný Panoramiks kód a formální audit Obelisk"
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#121212] hover:bg-[#1A1A1A] border border-[#222222] text-xs font-medium text-[#D4D4D8] hover:text-white transition-colors"
         >
           <FileCode className="w-3.5 h-3.5 text-[#38BDF8]" />
-          <span className="hidden md:inline">Ada Kód & Verifikace</span>
+          <span className="hidden md:inline">Panoramiks Kód & Obelisk</span>
         </button>
       </div>
 

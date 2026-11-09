@@ -136,16 +136,16 @@ export const FORBIDDEN_WORDS = [
 
 export const SPARK_PROMPT_PRESETS = [
   {
+    title: "QNX 8.0 Neutrino IPC & Priority-Inheritance Guard",
+    task: "Vytvoř QNX 8.0 Neutrino IPC Guard s děděním priorit (MsgSend/MsgReceive/MsgReply), ověřením pulzů (0..127) a Pre/Post kontrakty pro Obelisk.",
+  },
+  {
     title: "Bezpečný kruhový FIFO buffer",
     task: "Vytvoř kruhový buffer pro 64 celočíselných senzorických hodnot s operacemi Push a Pop, detekcí přetečení/podtečení bez výjimek a formálními Pre/Post kontrakty.",
   },
   {
     title: "Letový PID Regulátor s omezením",
     task: "Implementuj deterministický PID regulátor s pevnou řádovou čárkou, anti-windup ochranou a striktním rozsahem akčního členu -1000 .. +1000.",
-  },
-  {
-    title: "Semafor pro řízení křižovatky",
-    task: "Vytvoř stavový automat pro křižovatku se 4 fázemi, garancí vzájemného vyloučení kolizních zelených signálů a formálním invariantem.",
   },
   {
     title: "Kryptografický Token Validační Modul",

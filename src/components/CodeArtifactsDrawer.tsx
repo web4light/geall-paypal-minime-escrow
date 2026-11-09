@@ -132,7 +132,7 @@ end Spark_Module;`;
           </div>
           <div>
             <h3 className="text-base font-bold text-[#EDEDED] flex items-center gap-2">
-              Ada / SPARK Code Artifacts
+              G(E)A(L)L — Panoramiks & Asterisk Artifacts
               {verificationToDisplay && (
                 <span
                   className={`text-xs px-2 py-0.5 rounded-full font-mono flex items-center gap-1 ${
@@ -143,7 +143,7 @@ end Spark_Module;`;
                 >
                   {verificationToDisplay.overallPassed ? (
                     <>
-                      <CheckCircle2 className="w-3 h-3" /> gnatprove PASSED
+                      <CheckCircle2 className="w-3 h-3" /> Obelisk PASSED
                     </>
                   ) : (
                     <>
@@ -153,7 +153,7 @@ end Spark_Module;`;
                 </span>
               )}
             </h3>
-            <p className="text-xs text-[#71717A]">Specifikace (.ads), tělo (.adb) a formální audit</p>
+            <p className="text-xs text-[#71717A]">Panoramiks specifikace (.ads), tělo (.adb) a formální audit Obelisk</p>
           </div>
         </div>
 
@@ -208,7 +208,7 @@ end Spark_Module;`;
             }`}
           >
             <ShieldCheck className="w-3.5 h-3.5" />
-            gnatprove VC Audit
+            Obelisk VC Audit
           </button>
           <button
             onClick={() => setActiveTab("alire")}
@@ -219,7 +219,7 @@ end Spark_Module;`;
             }`}
           >
             <Package className="w-3.5 h-3.5" />
-            Alire Project
+            QNX 8.0 / Alire Project
           </button>
         </div>
 

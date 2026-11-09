@@ -13,10 +13,13 @@ import { NodePalette } from "./components/NodePalette";
 export default function App() {
   // Workflow state
   const [currentWorkflow, setCurrentWorkflow] = useState<Workflow>(() => {
-    const saved = localStorage.getItem("spark_automate_workflow");
+    const saved = localStorage.getItem("asterisk_automate_workflow_qnx");
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (parsed?.nodes && Array.isArray(parsed.nodes) && parsed.nodes.length >= 6) {
+          return parsed;
+        }
       } catch (e) {
         // fallback
       }
@@ -38,7 +41,7 @@ export default function App() {
 
   // Save workflow to localStorage on change
   useEffect(() => {
-    localStorage.setItem("spark_automate_workflow", JSON.stringify(currentWorkflow));
+    localStorage.setItem("asterisk_automate_workflow_qnx", JSON.stringify(currentWorkflow));
   }, [currentWorkflow]);
 
   // Node position update
@@ -150,8 +153,8 @@ export default function App() {
   const handleNewWorkflow = () => {
     const emptyWf: Workflow = {
       id: "wf_" + Date.now(),
-      name: "Nové Ada/SPARK Workflow",
-      description: "Vlastní automatizace pro generování a verifikaci Ada kódu",
+      name: "Nové Asterisk / Panoramiks Workflow",
+      description: "Vlastní automatizace pro generování Panoramiks kódu a verifikaci přes Obelisk (QNX 8.0)",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       nodes: [
@@ -165,7 +168,7 @@ export default function App() {
             category: "trigger",
             icon: "PlayCircle",
             config: {
-              testPayload: JSON.stringify({ task: "Vytvoř buffer pro 100 zpráv", priority: "high" }, null, 2),
+              testPayload: JSON.stringify({ task: "Vytvoř QNX 8.0 Neutrino IPC Guard", priority: "high" }, null, 2),
             },
             status: "idle",
           },
@@ -175,15 +178,15 @@ export default function App() {
           type: "spark_agent",
           position: { x: 480, y: 200 },
           data: {
-            label: "SPARK Ada Agent",
-            description: "Generuje kód podle SPARK pravidel",
+            label: "Asterisk Panoramiks Agent",
+            description: "Generuje Panoramiks kód podle pravidel Obelisk",
             category: "spark_ai",
             icon: "Cpu",
             config: {
-              model: "gemini-3.7-flash",
+              model: "local-qnx8-synthesizer",
               temperature: 0.2,
-              task: "Vytvoř buffer pro 100 zpráv s Pre/Post kontrakty a ranged typy.",
-              packageName: "Message_Buffer",
+              task: "Vytvoř QNX 8.0 Neutrino IPC Guard s děděním priorit a Pre/Post kontrakty.",
+              packageName: "QNX_Neutrino_IPC_Guard",
             },
             status: "idle",
           },
@@ -444,6 +447,25 @@ end Message_Buffer;`;
               audit
             );
           }
+        } else if (node.type === "ada_bundler") {
+          const pName = node.data.config?.projectName || "message_buffer";
+          const pVer = node.data.config?.version || "1.0.0";
+          const pLic = node.data.config?.license || "Apache-2.0";
+          appendLog(
+            node.id,
+            node.data.label,
+            "success",
+            `Ada / Alire Bundler: Zabalil balíček '${pName}' (verze ${pVer}, licence ${pLic}) do Alire struktury (alire.toml + src/ + obj/).`,
+            { bundled: true, projectName: pName, version: pVer }
+          );
+        } else if (node.type === "trigger_manual") {
+          appendLog(
+            node.id,
+            node.data.label,
+            "success",
+            `Manual Trigger: Ruční spuštění workflow aktivováno operátorem.`,
+            { triggered: true }
+          );
         } else if (node.type === "discord_webhook" || node.type === "slack_notification") {
           appendLog(
             node.id,
@@ -574,7 +596,7 @@ end Message_Buffer;`;
         onTestNode={handleRunSingleNode}
       />
 
-      {/* SPARK System Prompt & Rules Modal */}
+      {/* Asterisk / Panoramiks System Prompt & Rules Modal */}
       <SparkPromptModal
         isOpen={isPromptModalOpen}
         onClose={() => setIsPromptModalOpen(false)}
@@ -589,7 +611,7 @@ end Message_Buffer;`;
         }}
       />
 
-      {/* Ada / SPARK Code Artifacts & Formal Verification Drawer */}
+      {/* Panoramiks / Asterisk Code Artifacts & Obelisk Formal Verification Drawer */}
       <CodeArtifactsDrawer
         isOpen={isCodeDrawerOpen}
         onClose={() => setIsCodeDrawerOpen(false)}
