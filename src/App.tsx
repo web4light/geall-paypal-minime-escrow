@@ -13,7 +13,7 @@ import { NodePalette } from "./components/NodePalette";
 export default function App() {
   // Workflow state
   const [currentWorkflow, setCurrentWorkflow] = useState<Workflow>(() => {
-    const saved = localStorage.getItem("geall_gallic_workflow_v2");
+    const saved = localStorage.getItem("geall_gallic_workflow_v3");
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -42,7 +42,7 @@ export default function App() {
 
   // Save workflow to localStorage on change
   useEffect(() => {
-    localStorage.setItem("geall_gallic_workflow_v2", JSON.stringify(currentWorkflow));
+    localStorage.setItem("geall_gallic_workflow_v3", JSON.stringify(currentWorkflow));
   }, [currentWorkflow]);
 
   // Node position update

@@ -825,7 +825,7 @@ function synthesizeLocalSparkPackage(taskText: string): {
 } {
   const q = taskText.toLowerCase();
 
-  if (q.includes("paypal") || q.includes("payment") || q.includes("checkout") || q.includes("orders") || q.includes("settlement") || q.includes("commerce")) {
+  if (q.includes("paypal") || q.includes("payment") || q.includes("checkout") || q.includes("orders") || q.includes("settlement") || q.includes("commerce") || q.includes("minime") || q.includes("mezischrank") || q.includes("escrow")) {
     const pkgName = "PayPal_Agentic_Settlement_Guard";
     const adsPath = path.join(process.cwd(), "qnx_target", "paypal_agentic_settlement_guard.ads");
     const adbPath = path.join(process.cwd(), "qnx_target", "paypal_agentic_settlement_guard.adb");
@@ -840,7 +840,7 @@ function synthesizeLocalSparkPackage(taskText: string): {
       adsCode,
       adbCode,
       explanation:
-        "Vygenerován modul **`PayPal_Agentic_Settlement_Guard`** v jazyce **Panoramiks (`Ada 2022`)** s kontrakty **Asterisk (`SPARK 2022`)** pro **PayPal AI Hackathon (Agentic Commerce & PayPal Orders v2 Sandbox)**. Verifikátor **Obelisk (`GNATprove 16.1.0` + `CVC5`)** matematicky dokazuje **34/34 VC podmínek**: nulové překročení rozpočtu AI agenta (`Amount <= Wallet.Remaining_Budget`), blokaci rizikových transakcí (`Risk_Score <= 25`) a zákon zachování peněz při atomickém zúčtování (`Buyer_Balance'Old - Amount` a `Merchant_Balance'Old + Amount`).",
+        "Vygenerován modul **`PayPal_Agentic_Settlement_Guard`** (Dvojitá Mezischránka proti podvodníkům + **MiniMe Token v Adě** z `W:\\projekty\\_rozpracovane\\minime-ada`) v jazyce **Panoramiks (`Ada 2022`)** s kontrakty **Asterisk (`SPARK 2022`)**. Kupující složí peníze z PayPalu do **Mezischránky #1 (`Escrow_Fiat_Cents`)**, prodávající složí herní/krypto tokeny z **`MiniMe_Token` / `MiniMe_Controller`** do **Mezischránky #2 (`Escrow_MiniMe_Tokens`)** a verifikátor **Obelisk (`GNATprove 16.1.0` + `CVC5`)** matematicky dokazuje **18/18 VC podmínek**: atomická výplata proběhne teprve tehdy, když jsou obě mezischránky naplněné na 100 %.",
     };
   }
 

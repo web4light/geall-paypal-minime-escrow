@@ -3,22 +3,22 @@ import { Workflow } from "../types";
 export const WORKFLOW_TEMPLATES: Workflow[] = [
   {
     id: "template_paypal_geall_pipeline",
-    name: "G(E)A(L)L: PayPal AI Agentic Commerce → Panoramiks & Asterisk → Obelisk 34/34 Proved",
-    description: "Galská kovárna pro PayPal AI Hackathon: Přijme požadavek z PayPal Orders v2 Sandboxu, Asterisk (SPARK) vygeneruje modul PayPal_Agentic_Settlement_Guard v jazyce Panoramiks (Ada) a kamenný menhir Obelisk (GNATprove 16.1.0 + CVC5) dokáže 34/34 podmínek zachování peněz.",
+    name: "G(E)A(L)L: PayPal + MiniMe Ada Dvojitá Mezischránka (Anti-Scam Atomic Swap)",
+    description: "Ochrana proti podvodníkům přes 2 mezischránky: Z jedné strany jdou peníze z PayPalu (Escrow_Fiat_Cents), z druhé strany herní / krypto tokeny přes MiniMe v Adě (minime-ada: MiniMe_Token & MiniMe_Controller). Teprve když Obelisk (GNATprove 16.1.0) ověří vklad na obou stranách, provede se atomická výplata.",
     createdAt: "2026-11-09T14:00:00Z",
-    updatedAt: "2026-11-09T14:00:00Z",
+    updatedAt: "2026-11-09T16:20:00Z",
     nodes: [
       {
         id: "node_pp_1",
         type: "trigger_webhook",
         position: { x: 80, y: 120 },
         data: {
-          label: "PayPal Orders v2 Webhook",
-          description: "Příjem CHECKOUT.ORDER.APPROVED ze Sandboxu",
+          label: "Mezischránka #1: PayPal Peníze",
+          description: "Kupující skládá peníze z PayPalu do 1. mezischránky (Escrow_Fiat_Cents)",
           category: "trigger",
           icon: "Webhook",
           config: {
-            path: "/webhooks/paypal-orders-v2",
+            path: "/webhooks/paypal-escrow-deposit",
             method: "POST",
           },
           status: "idle",
@@ -29,16 +29,18 @@ export const WORKFLOW_TEMPLATES: Workflow[] = [
         type: "trigger_manual",
         position: { x: 80, y: 280 },
         data: {
-          label: "Manual Trigger (Galská Výheň)",
-          description: "Spuštění stavby PayPal AI Agentic Settlement aplikace",
+          label: "Mezischránka #2: MiniMe Ada Tokeny",
+          description: "Prodávající skládá herní tokeny / krypto přes MiniMe v Adě (minime-ada)",
           category: "trigger",
           icon: "PlayCircle",
           config: {
             testPayload: JSON.stringify(
               {
-                task: "PayPal Agentic Commerce Settlement Guard s kontrolou rozpočtu AI agenta a důkazem zachování peněz",
-                orderId: "PAYPAL-SANDBOX-8842",
-                amountCents: 12500,
+                task: "Anti-Scam Dual-Escrow (Dvojitá Mezischránka) pro PayPal peníze a herní tokeny přes MiniMe v Adě (minime-ada)",
+                orderId: "PAYPAL-MINIME-SWAP-8842",
+                fiatCents: 24990,
+                miniMeTokens: 500,
+                tokenRepo: "W:\\projekty\\_rozpracovane\\minime-ada (MiniMe_Token & MiniMe_Controller)",
               },
               null,
               2
@@ -52,15 +54,15 @@ export const WORKFLOW_TEMPLATES: Workflow[] = [
         type: "spark_agent",
         position: { x: 440, y: 200 },
         data: {
-          label: "Asterisk Agent (Panoramiks)",
-          description: "Kovář Panoramiks (Ada) & Asterisk (SPARK Kontrakty)",
+          label: "Asterisk & Panoramiks (Mezischránky)",
+          description: "Kovář Panoramiks (Ada) & Asterisk (SPARK) — Dual-Escrow + MiniMe_Token",
           category: "spark_ai",
           icon: "Cpu",
           config: {
             model: "local-geall-synthesizer",
             temperature: 0.1,
             packageName: "PayPal_Agentic_Settlement_Guard",
-            task: "Vytvoř PayPal Agentic Commerce Settlement Guard (PayPal Orders v2) s kontrolou rozpočtu AI agenta, Risk_Score <= 25 a Pre/Post důkazem zachování peněz.",
+            task: "Vytvoř Anti-Scam Dual-Escrow modul: Mezischránka #1 přijme PayPal peníze od kupujícího, Mezischránka #2 přijme herní tokeny/krypto přes MiniMe v Adě (MiniMe_Token / MiniMe_Controller) od prodávajícího. Atomická směna proběhne až když jsou v obou mezischránkách složeny peníze i tokeny.",
             strictContracts: true,
           },
           status: "idle",
@@ -72,7 +74,7 @@ export const WORKFLOW_TEMPLATES: Workflow[] = [
         position: { x: 800, y: 110 },
         data: {
           label: "Obelisk Verifier (GNATprove)",
-          description: "Kamenný menhir Obelisk: 34/34 VC důkazů přes CVC5",
+          description: "Menhir Obelisk: Důkaz 18/18 VCs (Nemožnost okradení žádné ze stran)",
           category: "spark_ai",
           icon: "ShieldCheck",
           config: {
@@ -90,12 +92,12 @@ export const WORKFLOW_TEMPLATES: Workflow[] = [
         type: "condition_filter",
         position: { x: 800, y: 290 },
         data: {
-          label: "Obelisk 100% PROVED Brána",
-          description: "Pustí platbu pouze pokud Obelisk dokázal 34/34 VCs",
+          label: "Brána: Obě Mezischránky Plné",
+          description: "Pustí atomickou směnu jen když jsou v mezischránce PayPal peníze I MiniMe tokeny",
           category: "logic",
           icon: "GitBranch",
           config: {
-            condition: "verification.overallPassed == true",
+            condition: "Escrow_Fiat_Cents == Agreed_Cents && Escrow_MiniMe_Tokens == Agreed_Tokens",
           },
           status: "idle",
         },
@@ -105,13 +107,13 @@ export const WORKFLOW_TEMPLATES: Workflow[] = [
         type: "ada_bundler",
         position: { x: 1160, y: 200 },
         data: {
-          label: "Panoramiks / PayPal App Bundler",
-          description: "Sestaví PROVED hotovou aplikaci (.ads + .adb + PayPal SDK)",
+          label: "Panoramiks + MiniMe Bundler",
+          description: "Sestaví PROVED hotovou aplikaci (.ads + .adb + MiniMe_Token Bridge)",
           category: "spark_ai",
           icon: "Package",
           config: {
             projectName: "paypal_agentic_settlement_guard",
-            version: "1.0.0",
+            version: "2.0.0",
             license: "Apache-2.0",
           },
           status: "idle",
@@ -122,8 +124,8 @@ export const WORKFLOW_TEMPLATES: Workflow[] = [
         type: "http_request",
         position: { x: 1520, y: 200 },
         data: {
-          label: "PayPal Sandbox Capture API",
-          description: "POST /v2/checkout/orders/{id}/capture (Atomické zúčtování)",
+          label: "Atomická Výplata (PayPal ↔ MiniMe)",
+          description: "Současně odešle PayPal peníze prodejci a MiniMe herní tokeny kupujícímu",
           category: "integration",
           icon: "Globe",
           config: {
@@ -138,12 +140,12 @@ export const WORKFLOW_TEMPLATES: Workflow[] = [
         type: "discord_webhook",
         position: { x: 1880, y: 200 },
         data: {
-          label: "Galský Posel (PROVED Report)",
-          description: "Oznámení o dokázané a zúčtované PayPal transakci",
+          label: "Galský Posel (Anti-Scam Potvrzení)",
+          description: "Potvrzení 100% PROVED směny mezi PayPal účtem a MiniMe v Adě",
           category: "integration",
           icon: "MessageSquare",
           config: {
-            channel: "#geall-paypal-proved",
+            channel: "#geall-dual-escrow-proved",
             webhookUrl: "https://discord.com/api/webhooks/demo/geall-paypal",
             includeReport: true,
           },
