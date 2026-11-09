@@ -1,59 +1,34 @@
-# G(E)A(L)L — Panoramiks · Asterisk · Obelisk Studio for BlackBerry QNX SDP 8.0
+# 🛡️ G(E)A(L)L — PayPal + MiniMe Ada Dual-Escrow Studio (GNATprove Level 4)
 
-**G(E)A(L)L** is a sovereign, zero-cloud-paywall visual workflow studio and formal verification environment engineered for **BlackBerry QNX Software Development Platform 8.0 (QNX Neutrino RTOS)**.
-
-Unlike cloud-bound prototyping tools (such as Google AI Studio) that require paid API keys and non-deterministic remote LLMs, **G(E)A(L)L** operates **100% locally, deterministically, and offline** using our three-pillar architecture:
-
-- **Panoramiks (`Ada 2022`)**: Strongly-typed, zero-heap systems implementation language (`new`, `Free`, `raise`, and `Unchecked_Conversion` strictly forbidden).
-- **Asterisk (`SPARK 2022`)**: Formal contract specification engine (`pragma SPARK_Mode (On);`, `Pre`/`Post` contracts, bounded ranges, and state machine invariants).
-- **Obelisk (`GNATprove 16.1.0` + `CVC5` / `Z3` SMT Provers)**: Mathematical verification gate proving **100% Absence of Run-Time Errors (AoRTE)** before a single binary is deployed to the QNX microkernel.
+**G(E)A(L)L** (*Gallic Workflow & Formal Verification Studio*) — Samostatný repozitář pro **PayPal AI Hackathon (Agentic Commerce & Dual-Escrow Anti-Scam Engine)**:
+- **Panoramiks (`Ada 2022`)** — Typově bezpečný a deterministický systémový jazyk bez haldy a bez výjimek
+- **Asterisk (`SPARK 2022`)** — Formální kontrakty (`Pre` / `Post`), dvojitý zákon zachování hodnoty a ochrana proti podvodníkům
+- **Obelisk (`GNATprove 16.1.0 --level=4` + `CVC5` / `Z3`)** — Matematický důkaz absence běhových chyb (AoRTE) na nejvyšší úrovni **Level 4**
 
 ---
 
-## 🎯 QNX SDP 8.0 Native Target Integration (`qnx_target/`)
+## 🔒 Architektura Dvojité Mezischránky proti podvodníkům (`PayPal_Agentic_Settlement_Guard` + `MiniMe-Ada`)
 
-All QNX 8.0 target artifacts live in [`qnx_target/`](./qnx_target):
+Tento projekt propojuje **PayPal Orders v2 Sandbox** s formálně verifikovaným klonovatelným tokenem **MiniMe v Adě** (`MiniMe_Types`, `MiniMe_History`, `MiniMe_Token`, `MiniMe_Controller`) přes **Dvojitou Mezischránku (`Dual_Escrow_Chamber`)**:
 
-1. **[`qnx_neutrino_ipc_guard.ads`](./qnx_target/qnx_neutrino_ipc_guard.ads) & [`qnx_neutrino_ipc_guard.adb`](./qnx_target/qnx_neutrino_ipc_guard.adb)**
-   - **Asterisk / Panoramiks** formal specification and implementation of the QNX Neutrino synchronous IPC state machine (`MsgSend` / `MsgReceive` / `MsgReply`) and non-blocking pulses (`MsgSendPulse` / `MsgReceivePulse`).
-   - Mathematically proves **QNX Priority Inheritance** (`Chan.Active_Priority >= Client_Priority` and `Chan.Active_Priority >= Chan.Server_Priority`), pulse code bounds (`0 .. 127`), scheduling priority bounds (`1 .. 255`), and zero buffer overflow (`0 .. 4096` bytes).
-   - **Obelisk Proof Status**: `Success: all checks proved (26 checks)` via `gnatprove 16.1.0` + `CVC5`.
-2. **[`spark_qnx_resmgr.c`](./qnx_target/spark_qnx_resmgr.c)**
-   - Native **QNX SDP 8.0 POSIX Resource Manager** (`#include <sys/neutrino.h>`, `<sys/iofunc.h>`, `<sys/dispatch.h>`, `<sys/resmgr.h>`) mounting `/dev/spark_guard` inside the QNX pathname space and enforcing the formally proved priority-inheritance and payload invariants on every `_IO_READ` and `_IO_WRITE` frame.
-3. **[`Makefile`](./qnx_target/Makefile)**
-   - Cross-compiles `/dev/spark_guard` with QNX `qcc` for both **x86_64** (`qcc -Vgcc_ntox86_64`) and **ARM64 / Raspberry Pi 4 & 5** (`qcc -Vgcc_ntoaaarch64le`), runs `gnatprove` (`Obelisk`), and builds a host simulation binary.
-4. **[`spark_qnx8.build`](./qnx_target/spark_qnx8.build)**
-   - QNX `mkifs` Image File System buildfile booting `procnto-smp-instr` and automatically launching `spark_qnx_resmgr_x86_64` at `/dev/spark_guard`.
-
----
-
-## 🚀 Quick Start (Local & Offline)
-
-```bash
-npm install
-npm run build
-npm start
-```
-
-### Verify QNX 8.0 Module with Obelisk (`gnatprove`)
-```bash
-cd qnx_target
-gnatprove -P qnx_spark.gpr -u qnx_neutrino_ipc_guard.adb --level=2 --report=statistics
-```
-
-### Build for QNX SDP 8.0 (`qcc` & `mkifs`)
-```bash
-source ~/qnx800/qnxsdp-env.sh
-cd qnx_target
-make qnx-x86_64
-make qnx-aarch64
-make ifs
-```
+1. **Mezischránka #1 (`Escrow_Fiat_Cents` — PayPal Peníze):**
+   - Kupující složí peníze ze svého PayPal účtu do 1. mezischránky (`Deposit_Buyer_PayPal_To_Escrow`). Peníze odejdou z `Buyer_PayPal_Cents`, ale prodávající na ně nemůže sáhnout, dokud nedodá dohodnuté tokeny.
+2. **Mezischránka #2 (`Escrow_MiniMe_Tokens` — MiniMe Ada Tokeny / Krypto / Herní Tokeny):**
+   - Prodávající složí herní tokeny / klonované MiniMe tokeny (`MMT`, `CMMT`, `KingsStar`, `Standard700_Gros`) ověřené přes `MiniMe_Controller.On_Transfer` do 2. mezischránky (`Deposit_Seller_MiniMe_Tokens_To_Escrow`).
+3. **Atomická Záměna Křížem (`Execute_Atomic_Dual_Escrow_Swap`):**
+   - **Obelisk (`gnatprove --level=4`)** matematicky garantuje, že uvolnění prostředků nastane **výhradně tehdy**, když jsou obě mezischránky naplněné na 100 % (`Escrow_Fiat_Cents = Agreed_Fiat_Cents` a `Escrow_MiniMe_Tokens = Agreed_MiniMe_Tokens`).
+   - V jediném neoddělitelném kroku odešle PayPal peníze prodávajícímu a MiniMe tokeny kupujícímu.
+4. **Nouzové Vrácení (`Refund_Dual_Escrow`):**
+   - Pokud kterákoliv strana nedodá svou část obchodu, mezischránka vrátí peníze kupujícímu a tokeny prodávajícímu s nulovou ztrátou.
 
 ---
 
-## 🎥 Demo Video
-- **YouTube**: [https://youtu.be/0Xl1ExSktgg](https://youtu.be/0Xl1ExSktgg)
+## ✅ Výsledek verifikace Obelisk (`gnatprove --level=4`)
 
-## 📜 License
-Released under the **Apache-2.0** Open Source License (see [`LICENSE`](./LICENSE)).
+```text
+gnatprove -P qnx_spark.gpr -u paypal_agentic_settlement_guard.adb --mode=all --report=all --level=4
+Phase 1 of 3: generation of data representation information ...
+Phase 2 of 3: generation of Global contracts ...
+Phase 3 of 3: flow analysis and proof ...
+Success: all checks proved (18 checks).
+```
