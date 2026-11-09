@@ -13,7 +13,7 @@ import { NodePalette } from "./components/NodePalette";
 export default function App() {
   // Workflow state
   const [currentWorkflow, setCurrentWorkflow] = useState<Workflow>(() => {
-    const saved = localStorage.getItem("asterisk_automate_workflow_qnx");
+    const saved = localStorage.getItem("geall_gallic_workflow_v2");
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -35,13 +35,14 @@ export default function App() {
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
 
-  // Execution & Code Artifacts state
+  //Execution & Code Artifacts state
   const [logs, setLogs] = useState<ExecutionLog[]>([]);
   const [generatedCode, setGeneratedCode] = useState<SparkGeneratedCode | null>(null);
+  const [logsExpanded, setLogsExpanded] = useState(false);
 
   // Save workflow to localStorage on change
   useEffect(() => {
-    localStorage.setItem("asterisk_automate_workflow_qnx", JSON.stringify(currentWorkflow));
+    localStorage.setItem("geall_gallic_workflow_v2", JSON.stringify(currentWorkflow));
   }, [currentWorkflow]);
 
   // Node position update
@@ -246,6 +247,7 @@ export default function App() {
   // Full Workflow Execution Engine
   const handleRunWorkflow = async () => {
     setIsRunning(true);
+    setLogsExpanded(true);
     const newLogs: ExecutionLog[] = [];
 
     const appendLog = (
@@ -584,7 +586,13 @@ end Message_Buffer;`;
       </div>
 
       {/* Bottom Execution Logs Panel */}
-      <ExecutionLogsPanel logs={logs} onClear={() => setLogs([])} isRunning={isRunning} />
+      <ExecutionLogsPanel
+        logs={logs}
+        onClear={() => setLogs([])}
+        isRunning={isRunning}
+        externalExpanded={logsExpanded}
+        onToggleExpanded={setLogsExpanded}
+      />
 
       {/* Node Config Modal */}
       <NodeConfigModal

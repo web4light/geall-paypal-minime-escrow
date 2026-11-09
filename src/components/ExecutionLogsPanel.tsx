@@ -19,10 +19,23 @@ interface ExecutionLogsPanelProps {
   logs: ExecutionLog[];
   onClear: () => void;
   isRunning?: boolean;
+  externalExpanded?: boolean;
+  onToggleExpanded?: (val: boolean) => void;
 }
 
-export const ExecutionLogsPanel: React.FC<ExecutionLogsPanelProps> = ({ logs, onClear, isRunning }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+export const ExecutionLogsPanel: React.FC<ExecutionLogsPanelProps> = ({
+  logs,
+  onClear,
+  isRunning,
+  externalExpanded,
+  onToggleExpanded,
+}) => {
+  const [internalExpanded, setInternalExpanded] = useState(false);
+  const isExpanded = externalExpanded !== undefined ? externalExpanded : internalExpanded;
+  const setIsExpanded = (val: boolean) => {
+    setInternalExpanded(val);
+    if (onToggleExpanded) onToggleExpanded(val);
+  };
   const [selectedLog, setSelectedLog] = useState<ExecutionLog | null>(null);
 
   const getStatusIcon = (status: ExecutionLog["status"]) => {

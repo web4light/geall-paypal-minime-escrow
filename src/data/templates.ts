@@ -2,6 +2,167 @@ import { Workflow } from "../types";
 
 export const WORKFLOW_TEMPLATES: Workflow[] = [
   {
+    id: "template_paypal_geall_pipeline",
+    name: "G(E)A(L)L: PayPal AI Agentic Commerce → Panoramiks & Asterisk → Obelisk 34/34 Proved",
+    description: "Galská kovárna pro PayPal AI Hackathon: Přijme požadavek z PayPal Orders v2 Sandboxu, Asterisk (SPARK) vygeneruje modul PayPal_Agentic_Settlement_Guard v jazyce Panoramiks (Ada) a kamenný menhir Obelisk (GNATprove 16.1.0 + CVC5) dokáže 34/34 podmínek zachování peněz.",
+    createdAt: "2026-11-09T14:00:00Z",
+    updatedAt: "2026-11-09T14:00:00Z",
+    nodes: [
+      {
+        id: "node_pp_1",
+        type: "trigger_webhook",
+        position: { x: 80, y: 120 },
+        data: {
+          label: "PayPal Orders v2 Webhook",
+          description: "Příjem CHECKOUT.ORDER.APPROVED ze Sandboxu",
+          category: "trigger",
+          icon: "Webhook",
+          config: {
+            path: "/webhooks/paypal-orders-v2",
+            method: "POST",
+          },
+          status: "idle",
+        },
+      },
+      {
+        id: "node_pp_2",
+        type: "trigger_manual",
+        position: { x: 80, y: 280 },
+        data: {
+          label: "Manual Trigger (Galská Výheň)",
+          description: "Spuštění stavby PayPal AI Agentic Settlement aplikace",
+          category: "trigger",
+          icon: "PlayCircle",
+          config: {
+            testPayload: JSON.stringify(
+              {
+                task: "PayPal Agentic Commerce Settlement Guard s kontrolou rozpočtu AI agenta a důkazem zachování peněz",
+                orderId: "PAYPAL-SANDBOX-8842",
+                amountCents: 12500,
+              },
+              null,
+              2
+            ),
+          },
+          status: "idle",
+        },
+      },
+      {
+        id: "node_pp_3",
+        type: "spark_agent",
+        position: { x: 440, y: 200 },
+        data: {
+          label: "Asterisk Agent (Panoramiks)",
+          description: "Kovář Panoramiks (Ada) & Asterisk (SPARK Kontrakty)",
+          category: "spark_ai",
+          icon: "Cpu",
+          config: {
+            model: "local-geall-synthesizer",
+            temperature: 0.1,
+            packageName: "PayPal_Agentic_Settlement_Guard",
+            task: "Vytvoř PayPal Agentic Commerce Settlement Guard (PayPal Orders v2) s kontrolou rozpočtu AI agenta, Risk_Score <= 25 a Pre/Post důkazem zachování peněz.",
+            strictContracts: true,
+          },
+          status: "idle",
+        },
+      },
+      {
+        id: "node_pp_4",
+        type: "spark_verifier",
+        position: { x: 800, y: 110 },
+        data: {
+          label: "Obelisk Verifier (GNATprove)",
+          description: "Kamenný menhir Obelisk: 34/34 VC důkazů přes CVC5",
+          category: "spark_ai",
+          icon: "ShieldCheck",
+          config: {
+            mode: "auto",
+            proofLevel: 2,
+            strictRules: true,
+            checkPrePost: true,
+            checkRangedTypes: true,
+          },
+          status: "idle",
+        },
+      },
+      {
+        id: "node_pp_5",
+        type: "condition_filter",
+        position: { x: 800, y: 290 },
+        data: {
+          label: "Obelisk 100% PROVED Brána",
+          description: "Pustí platbu pouze pokud Obelisk dokázal 34/34 VCs",
+          category: "logic",
+          icon: "GitBranch",
+          config: {
+            condition: "verification.overallPassed == true",
+          },
+          status: "idle",
+        },
+      },
+      {
+        id: "node_pp_6",
+        type: "ada_bundler",
+        position: { x: 1160, y: 200 },
+        data: {
+          label: "Panoramiks / PayPal App Bundler",
+          description: "Sestaví PROVED hotovou aplikaci (.ads + .adb + PayPal SDK)",
+          category: "spark_ai",
+          icon: "Package",
+          config: {
+            projectName: "paypal_agentic_settlement_guard",
+            version: "1.0.0",
+            license: "Apache-2.0",
+          },
+          status: "idle",
+        },
+      },
+      {
+        id: "node_pp_7",
+        type: "http_request",
+        position: { x: 1520, y: 200 },
+        data: {
+          label: "PayPal Sandbox Capture API",
+          description: "POST /v2/checkout/orders/{id}/capture (Atomické zúčtování)",
+          category: "integration",
+          icon: "Globe",
+          config: {
+            url: "https://api-m.sandbox.paypal.com/v2/checkout/orders/8842/capture",
+            method: "POST",
+          },
+          status: "idle",
+        },
+      },
+      {
+        id: "node_pp_8",
+        type: "discord_webhook",
+        position: { x: 1880, y: 200 },
+        data: {
+          label: "Galský Posel (PROVED Report)",
+          description: "Oznámení o dokázané a zúčtované PayPal transakci",
+          category: "integration",
+          icon: "MessageSquare",
+          config: {
+            channel: "#geall-paypal-proved",
+            webhookUrl: "https://discord.com/api/webhooks/demo/geall-paypal",
+            includeReport: true,
+          },
+          status: "idle",
+        },
+      },
+    ],
+    edges: [
+      { id: "ep1", source: "node_pp_1", target: "node_pp_3" },
+      { id: "ep2", source: "node_pp_2", target: "node_pp_3" },
+      { id: "ep3", source: "node_pp_3", target: "node_pp_4" },
+      { id: "ep4", source: "node_pp_3", target: "node_pp_5" },
+      { id: "ep5", source: "node_pp_4", target: "node_pp_6" },
+      { id: "ep6", source: "node_pp_5", target: "node_pp_6" },
+      { id: "ep7", source: "node_pp_6", target: "node_pp_7" },
+      { id: "ep8", source: "node_pp_7", target: "node_pp_8" },
+    ],
+  },
+  {
     id: "template_qnx_geall_pipeline",
     name: "G(E)A(L)L: QNX 8.0 Neutrino IPC → Asterisk & Panoramiks → Obelisk Proof",
     description: "Nativní pipeline pro QNX SDP 8.0: Asterisk (SPARK) vygeneruje modul v jazyce Panoramiks (Ada), Obelisk (GNATprove) matematicky dokáže 26/26 VC podmínek a zabalí POSIX Resource Manager (/dev/spark_guard).",

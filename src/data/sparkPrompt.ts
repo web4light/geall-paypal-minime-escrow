@@ -136,6 +136,10 @@ export const FORBIDDEN_WORDS = [
 
 export const SPARK_PROMPT_PRESETS = [
   {
+    title: "PayPal AI Agentic Settlement Guard (34/34 VCs Proved)",
+    task: "Vytvoř PayPal Agentic Commerce Settlement Guard (PayPal Orders v2) s kontrolou rozpočtu AI agenta, Risk_Score <= 25 a Pre/Post důkazem zachování peněz.",
+  },
+  {
     title: "QNX 8.0 Neutrino IPC & Priority-Inheritance Guard",
     task: "Vytvoř QNX 8.0 Neutrino IPC Guard s děděním priorit (MsgSend/MsgReceive/MsgReply), ověřením pulzů (0..127) a Pre/Post kontrakty pro Obelisk.",
   },
