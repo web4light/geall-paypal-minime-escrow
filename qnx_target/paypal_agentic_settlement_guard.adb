@@ -3,17 +3,25 @@ pragma SPARK_Mode (On);
 package body PayPal_Agentic_Settlement_Guard is
 
    procedure Lock_Trade_Terms
-     (Chamber       : in out Dual_Escrow_Chamber;
-      Fiat_Cents    : in     Order_Cents_Type;
-      Token_Amount  : in     Order_Tokens_Type;
-      Token_Id      : in     MiniMe_Token_Id;
-      Block_Num     : in     Block_Num_Type;
-      Asset         : in     MiniMe_Asset_Kind;
-      Risk_Score    : in     Risk_Score_Type;
-      Terms_Accepted:    out Boolean)
+     (Chamber                : in out Dual_Escrow_Chamber;
+      Fiat_Cents             : in     Order_Cents_Type;
+      Token_Amount           : in     Order_Tokens_Type;
+      Token_Id               : in     MiniMe_Token_Id;
+      Block_Num              : in     Block_Num_Type;
+      Asset                  : in     MiniMe_Asset_Kind;
+      Risk_Score             : in     Risk_Score_Type;
+      Geth_No_Hidden_Mint    : in     Boolean;
+      Prometheus_Backing     : in     Backing_Ratio_Pct;
+      Terms_Accepted         :    out Boolean)
    is
    begin
-      if Fiat_Cents > 0
+      if not Geth_No_Hidden_Mint or else Prometheus_Backing < 100 then
+         -- Geth Shadow & Prometheus detected an unbacked shitcoin or honeypot!
+         Chamber.Geth_Shadow_Clean_History := False;
+         Chamber.Prometheus_Backing_Pct    := Prometheus_Backing;
+         Chamber.Token_Verdict             := Rejected_Shitcoin;
+         Terms_Accepted                    := False;
+      elsif Fiat_Cents > 0
         and then Token_Amount > 0
         and then Risk_Score <= 25
         and then Fiat_Cents <= Chamber.Remaining_AI_Budget
@@ -27,6 +35,9 @@ package body PayPal_Agentic_Settlement_Guard is
          Chamber.Snapshot_Block             := Block_Num;
          Chamber.Asset_Kind                 := Asset;
          Chamber.MiniMe_Controller_Approved := False;
+         Chamber.Geth_Shadow_Clean_History  := True;
+         Chamber.Prometheus_Backing_Pct     := 100;
+         Chamber.Token_Verdict              := Verified_Legit_Token;
          Chamber.State                      := Escrow_Terms_Locked;
          Terms_Accepted                     := True;
       else
