@@ -42,30 +42,30 @@ export const WorkflowNodeCard: React.FC<WorkflowNodeCardProps> = ({
   const getCategoryColor = () => {
     switch (node.data?.category) {
       case "spark_ai":
-        return "border-[#F27D26]/40 shadow-[#F27D26]/10";
+        return "border-[#D4AF37]/50 shadow-[#D4AF37]/15";
       case "trigger":
-        return "border-[#38BDF8]/40 shadow-[#38BDF8]/10";
+        return "border-[#38BDF8]/45 shadow-[#38BDF8]/10";
       case "integration":
-        return "border-[#00FF85]/40 shadow-[#00FF85]/10";
+        return "border-[#4ADE80]/45 shadow-[#4ADE80]/10";
       case "logic":
-        return "border-[#A855F7]/40 shadow-[#A855F7]/10";
+        return "border-[#C084FC]/45 shadow-[#C084FC]/10";
       default:
-        return "border-[#222222]";
+        return "border-[#213426]";
     }
   };
 
   const getCategoryBg = () => {
     switch (node.data?.category) {
       case "spark_ai":
-        return "bg-gradient-to-b from-[#F27D26]/12 via-[#0F0F0F]/95 to-[#080808]";
+        return "bg-gradient-to-b from-[#D4AF37]/15 via-[#0E1B12]/95 to-[#09120C]";
       case "trigger":
-        return "bg-gradient-to-b from-[#38BDF8]/12 via-[#0F0F0F]/95 to-[#080808]";
+        return "bg-gradient-to-b from-[#38BDF8]/15 via-[#0E1B12]/95 to-[#09120C]";
       case "integration":
-        return "bg-gradient-to-b from-[#00FF85]/12 via-[#0F0F0F]/95 to-[#080808]";
+        return "bg-gradient-to-b from-[#4ADE80]/15 via-[#0E1B12]/95 to-[#09120C]";
       case "logic":
-        return "bg-gradient-to-b from-[#A855F7]/12 via-[#0F0F0F]/95 to-[#080808]";
+        return "bg-gradient-to-b from-[#C084FC]/15 via-[#0E1B12]/95 to-[#09120C]";
       default:
-        return "bg-[#0F0F0F]";
+        return "bg-[#0E1B12]";
     }
   };
 
@@ -79,7 +79,7 @@ export const WorkflowNodeCard: React.FC<WorkflowNodeCardProps> = ({
         transform: `translate(${node.position.x}px, ${node.position.y}px)`,
       }}
       className={`absolute w-72 rounded-2xl border transition-all duration-150 select-none shadow-2xl cursor-grab active:cursor-grabbing backdrop-blur-md ${getCategoryBg()} ${getCategoryColor()} ${
-        isSelected ? "ring-2 ring-[#F27D26] border-[#F27D26] scale-[1.02]" : "hover:border-[#333333]"
+        isSelected ? "ring-2 ring-[#D4AF37] border-[#D4AF37] scale-[1.02]" : "hover:border-[#D4AF37]/60"
       } ${isRunning ? "animate-pulse" : ""}`}
     >
       {/* Input Ports (Left) */}
@@ -93,9 +93,9 @@ export const WorkflowNodeCard: React.FC<WorkflowNodeCardProps> = ({
                 if (onEndConnection) onEndConnection(node.id, port.id);
               }}
               title={`Vstupní port: ${port.name}`}
-              className="w-6 h-6 rounded-full bg-[#0A0A0A] border-2 border-[#333333] hover:border-[#F27D26] hover:scale-125 transition-all flex items-center justify-center cursor-pointer shadow-md group"
+              className="w-6 h-6 rounded-full bg-[#09120C] border-2 border-[#2A4230] hover:border-[#D4AF37] hover:scale-125 transition-all flex items-center justify-center cursor-pointer shadow-md group"
             >
-              <div className="w-2 h-2 rounded-full bg-[#52525B] group-hover:bg-[#F27D26]" />
+              <div className="w-2 h-2 rounded-full bg-[#4ADE80] group-hover:bg-[#D4AF37]" />
             </div>
           ))}
         </div>
@@ -111,31 +111,31 @@ export const WorkflowNodeCard: React.FC<WorkflowNodeCardProps> = ({
               if (onStartConnection) onStartConnection(node.id, port.id, true);
             }}
             title={`Výstupní port: ${port.name}`}
-            className="w-6 h-6 rounded-full bg-[#0A0A0A] border-2 border-[#F27D26] hover:border-[#FFA057] hover:scale-125 transition-all flex items-center justify-center cursor-pointer shadow-md group"
+            className="w-6 h-6 rounded-full bg-[#09120C] border-2 border-[#D4AF37] hover:border-[#FDE047] hover:scale-125 transition-all flex items-center justify-center cursor-pointer shadow-md group"
           >
-            <div className="w-2 h-2 rounded-full bg-[#F27D26] group-hover:bg-[#FFA057]" />
+            <div className="w-2 h-2 rounded-full bg-[#D4AF37] group-hover:bg-[#FDE047]" />
           </div>
         ))}
       </div>
 
       {/* Node Header */}
-      <div className="p-3.5 border-b border-[#1A1A1A] flex items-center justify-between">
+      <div className="p-3.5 border-b border-[#213426] flex items-center justify-between">
         <div className="flex items-center gap-2.5 min-w-0">
           <div
             className={`p-2 rounded-xl border flex-shrink-0 ${
               isSpark
-                ? "bg-[#F27D26]/20 text-[#F27D26] border-[#F27D26]/30"
+                ? "bg-[#D4AF37]/20 text-[#D4AF37] border-[#D4AF37]/40"
                 : isTrigger
-                ? "bg-[#38BDF8]/20 text-[#38BDF8] border-[#38BDF8]/30"
-                : "bg-[#141414] text-[#A1A1AA] border-[#222222]"
+                ? "bg-[#38BDF8]/20 text-[#38BDF8] border-[#38BDF8]/40"
+                : "bg-[#122217] text-[#E2DEC9] border-[#2A4230]"
             }`}
           >
             <NodeIcon name={node.data.icon || def.iconName} className="w-4 h-4" />
           </div>
           <div className="min-w-0">
-            <h4 className="text-xs font-bold text-[#EDEDED] truncate tracking-tight">{node.data.label}</h4>
-            <span className="text-[10px] text-[#71717A] block truncate font-mono">
-              {node.data.category.toUpperCase()}
+            <h4 className="text-xs font-bold text-[#F4EFE0] truncate tracking-tight">{node.data.label}</h4>
+            <span className="text-[10px] text-[#9CAEA2] block truncate font-mono">
+              {node.data.category === "spark_ai" ? "☘️ DRUID & MENHIR" : node.data.category.toUpperCase()}
             </span>
           </div>
         </div>
@@ -160,15 +160,15 @@ export const WorkflowNodeCard: React.FC<WorkflowNodeCardProps> = ({
         <p className="text-[#A1A1AA] line-clamp-2 leading-relaxed">{node.data.description}</p>
 
         {node.type === "spark_agent" && node.data?.config?.task && (
-          <div className="p-2 rounded-lg bg-[#050505] border border-[#F27D26]/20 font-mono text-[10px] text-[#F27D26] truncate">
-            📝 "{node.data.config.task}"
+          <div className="p-2 rounded-lg bg-[#070E09] border border-[#D4AF37]/30 font-mono text-[10px] text-[#D4AF37] truncate">
+            ⚗️ "{node.data.config.task}"
           </div>
         )}
 
         {node.type === "spark_verifier" && (
-          <div className="flex items-center justify-between text-[10px] text-[#A1A1AA] font-mono">
-            <span>Proof Level:</span>
-            <span className="text-[#F27D26] font-semibold">Level {node.data?.config?.proofLevel || 3}</span>
+          <div className="flex items-center justify-between text-[10px] text-[#E2DEC9] font-mono">
+            <span>Menhir Proof Level:</span>
+            <span className="text-[#38BDF8] font-semibold">Level {node.data?.config?.proofLevel || 2}</span>
           </div>
         )}
 

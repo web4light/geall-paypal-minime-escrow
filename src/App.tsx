@@ -549,7 +549,7 @@ end Message_Buffer;`;
   };
 
   return (
-    <div className="flex flex-col w-screen h-screen overflow-hidden bg-[#050505] text-[#EDEDED] font-sans selection:bg-[#F27D26]/30 selection:text-white">
+    <div className="flex flex-col w-screen h-screen overflow-hidden bg-[#08100B] text-[#F4EFE0] font-sans selection:bg-[#D4AF37]/30 selection:text-white">
       {/* Top Navbar */}
       <Navbar
         currentWorkflow={currentWorkflow}

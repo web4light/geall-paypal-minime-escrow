@@ -39,28 +39,28 @@ export const ExecutionLogsPanel: React.FC<ExecutionLogsPanelProps> = ({ logs, on
   };
 
   return (
-    <div className="border-t border-[#1A1A1A] bg-[#0A0A0A]/95 backdrop-blur-md z-30 transition-all">
+    <div className="border-t border-[#D4AF37]/30 bg-[#0A130D]/95 backdrop-blur-md z-30 transition-all">
       {/* Header Bar */}
       <div className="flex items-center justify-between px-6 py-2.5">
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="flex items-center gap-3 text-xs font-semibold text-[#D4D4D8] hover:text-white transition-colors"
+          className="flex items-center gap-3 text-xs font-semibold text-[#E2DEC9] hover:text-white transition-colors"
         >
           <div className="flex items-center gap-2">
-            <Terminal className="w-4 h-4 text-[#F27D26]" />
-            <span>Workflow Execution & Audit Logs</span>
+            <Terminal className="w-4 h-4 text-[#D4AF37]" />
+            <span className="font-gaul tracking-wide">📜 Galská Kronika Běhu & Obelisk Audit</span>
             {logs.length > 0 && (
-              <span className="px-2 py-0.5 rounded-full bg-[#181818] text-[#F27D26] font-mono text-[11px] border border-[#262626]">
-                {logs.length} událostí
+              <span className="px-2 py-0.5 rounded-full bg-[#122217] text-[#D4AF37] font-mono text-[11px] border border-[#D4AF37]/40">
+                {logs.length} záznamů
               </span>
             )}
             {isRunning && (
               <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#38BDF8]/15 text-[#38BDF8] border border-[#38BDF8]/30 text-[11px] animate-pulse">
-                <Activity className="w-3 h-3 animate-spin" /> Běží...
+                <Activity className="w-3 h-3 animate-spin" /> Křesám Menhir...
               </span>
             )}
           </div>
-          {isExpanded ? <ChevronDown className="w-4 h-4 text-[#71717A]" /> : <ChevronUp className="w-4 h-4 text-[#71717A]" />}
+          {isExpanded ? <ChevronDown className="w-4 h-4 text-[#9CAEA2]" /> : <ChevronUp className="w-4 h-4 text-[#9CAEA2]" />}
         </button>
 
         <div className="flex items-center gap-2">

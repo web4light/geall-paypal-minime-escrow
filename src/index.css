@@ -2,30 +2,33 @@
 
 @layer base {
   * {
-    border-color: #1A1A1A;
+    border-color: #213426;
   }
   body {
-    background-color: #050505;
-    color: #EDEDED;
+    background-color: #08100B;
+    color: #F4EFE0;
     font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  h1, h2, .font-gaul {
+    font-family: 'Cinzel', serif;
   }
   code, pre, kbd {
     font-family: 'Fira Code', monospace;
   }
 }
 
-/* Custom Sophisticated Dark Scrollbars */
+/* Gallic Menhir & Gold Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0A0A0A;
+  background: #0A130D;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1F1F1F;
+  background: #2A4230;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2D2D2D;
+  background: #D4AF37;
 }

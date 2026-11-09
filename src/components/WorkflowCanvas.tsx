@@ -143,41 +143,85 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onWheel={handleWheel}
-      className="relative flex-1 w-full h-full overflow-hidden bg-[#050505] cursor-crosshair select-none"
+      className="relative flex-1 w-full h-full overflow-hidden bg-gradient-to-br from-[#070E09] via-[#0B160E] to-[#08100B] cursor-crosshair select-none"
     >
-      {/* Background Matrix / Grid */}
+      {/* Gallic Golden Mistletoe & Menhir Grid */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-25"
+        className="absolute inset-0 pointer-events-none opacity-30"
         style={{
-          backgroundImage: `radial-gradient(#F27D26 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(#D4AF37 1.2px, transparent 1.2px)`,
           backgroundSize: `${24 * zoom}px ${24 * zoom}px`,
           backgroundPosition: `${pan.x}px ${pan.y}px`,
         }}
       />
 
-      {/* Floating Canvas Controls */}
-      <div className="absolute top-4 right-4 z-30 flex items-center gap-1.5 p-1.5 rounded-xl bg-[#121212]/95 border border-[#222222] backdrop-blur-md shadow-2xl">
+      {/* Top Gallic Banner Badge on Canvas */}
+      <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 pointer-events-none hidden md:flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#0C1710]/90 border border-[#D4AF37]/35 backdrop-blur-md shadow-xl">
+        <span className="text-xs font-gaul font-bold text-[#D4AF37] tracking-wider">
+          🛡️ GALSKÁ TVRZ G(E)A(L)L
+        </span>
+        <span className="text-[#2A4230]">•</span>
+        <span className="text-[11px] font-mono text-[#E2DEC9]">
+          Panoramiks (Ada) + Asterisk (SPARK) + Obelisk (GNATprove) → QNX SDP 8.0
+        </span>
+      </div>
+
+      {/* Left-side Floating Tools Panel */}
+      <div className="absolute top-4 left-4 z-30 flex flex-col gap-1 p-1.5 rounded-xl bg-[#0D1911]/95 border border-[#D4AF37]/30 backdrop-blur-md shadow-2xl">
+        <button
+          onClick={onOpenNodePalette}
+          title="Otevřít kovárnu a knihovnu galských uzlů"
+          className="p-2 rounded-lg bg-[#D4AF37]/15 text-[#D4AF37] hover:bg-[#D4AF37]/25 transition-colors border border-[#D4AF37]/40"
+        >
+          <Plus className="w-4 h-4" />
+        </button>
+        <div className="h-px w-full bg-[#213426] my-0.5" />
         <button
           onClick={() => setZoom((z) => Math.min(z + 0.15, 2))}
           title="Přiblížit (+)"
-          className="p-2 rounded-lg text-[#A1A1AA] hover:text-white hover:bg-[#1A1A1A] transition-colors"
+          className="p-2 rounded-lg text-[#9CAEA2] hover:text-[#F4EFE0] hover:bg-[#162B1D] transition-colors"
         >
           <ZoomIn className="w-4 h-4" />
         </button>
-        <span className="text-[11px] font-mono text-[#A1A1AA] px-1 min-w-[42px] text-center">
+        <button
+          onClick={() => setZoom((z) => Math.max(z - 0.15, 0.4))}
+          title="Oddálit (-)"
+          className="p-2 rounded-lg text-[#9CAEA2] hover:text-[#F4EFE0] hover:bg-[#162B1D] transition-colors"
+        >
+          <ZoomOut className="w-4 h-4" />
+        </button>
+        <button
+          onClick={resetView}
+          title="Vycentrovat zobrazení"
+          className="p-2 rounded-lg text-[#9CAEA2] hover:text-[#F4EFE0] hover:bg-[#162B1D] transition-colors"
+        >
+          <Maximize2 className="w-4 h-4" />
+        </button>
+      </div>
+
+      {/* Floating Canvas Controls */}
+      <div className="absolute top-4 right-4 z-30 flex items-center gap-1.5 p-1.5 rounded-xl bg-[#0D1911]/95 border border-[#D4AF37]/30 backdrop-blur-md shadow-2xl">
+        <button
+          onClick={() => setZoom((z) => Math.min(z + 0.15, 2))}
+          title="Přiblížit (+)"
+          className="p-2 rounded-lg text-[#9CAEA2] hover:text-[#F4EFE0] hover:bg-[#162B1D] transition-colors"
+        >
+          <ZoomIn className="w-4 h-4" />
+        </button>
+        <span className="text-[11px] font-mono text-[#D4AF37] px-1 min-w-[42px] text-center">
           {Math.round(zoom * 100)}%
         </span>
         <button
           onClick={() => setZoom((z) => Math.max(z - 0.15, 0.4))}
           title="Oddálit (-)"
-          className="p-2 rounded-lg text-[#A1A1AA] hover:text-white hover:bg-[#1A1A1A] transition-colors"
+          className="p-2 rounded-lg text-[#9CAEA2] hover:text-[#F4EFE0] hover:bg-[#162B1D] transition-colors"
         >
           <ZoomOut className="w-4 h-4" />
         </button>
         <button
           onClick={resetView}
           title="Resetovat zobrazení"
-          className="p-2 rounded-lg text-[#A1A1AA] hover:text-white hover:bg-[#1A1A1A] transition-colors"
+          className="p-2 rounded-lg text-[#9CAEA2] hover:text-[#F4EFE0] hover:bg-[#162B1D] transition-colors"
         >
           <Maximize2 className="w-4 h-4" />
         </button>
@@ -187,10 +231,10 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
       <div className="absolute bottom-6 right-6 z-30">
         <button
           onClick={onOpenNodePalette}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#F27D26] to-[#E06A14] hover:from-[#FFA057] hover:to-[#F27D26] text-[#050505] font-bold text-xs shadow-xl shadow-[#F27D26]/25 transition-all hover:scale-105 active:scale-95"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#B8860B] hover:from-[#FDE047] hover:to-[#D4AF37] text-[#08100B] font-bold text-xs shadow-xl shadow-[#D4AF37]/25 transition-all hover:scale-105 active:scale-95"
         >
           <Plus className="w-4 h-4" />
-          Přidat Uzel
+          Přidat Galský Uzel
         </button>
       </div>
 
@@ -206,7 +250,8 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
         <svg className="absolute inset-0 w-[5000px] h-[5000px] pointer-events-none z-10 overflow-visible">
           <defs>
             <linearGradient id="edgeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#F27D26" />
+              <stop offset="0%" stopColor="#D4AF37" />
+              <stop offset="50%" stopColor="#4ADE80" />
               <stop offset="100%" stopColor="#38BDF8" />
             </linearGradient>
             <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
