@@ -14,7 +14,7 @@ all: prove host-sim
 
 # 1. Formal Verification of Ada 2022 / SPARK 2022 QNX IPC Guard
 prove:
-	$(GNATPROVE) -P qnx_spark.gpr -u qnx_neutrino_ipc_guard.adb --level=2 --report=all
+	$(GNATPROVE) -P qnx_spark.gpr -u qnx_neutrino_ipc_guard.adb --level=4 --report=all
 
 # 2. Cross-compile native QNX 8.0 Resource Manager for x86_64 (QEMU / IPC Target)
 qnx-x86_64:

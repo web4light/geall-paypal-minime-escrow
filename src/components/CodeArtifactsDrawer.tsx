@@ -73,7 +73,7 @@ gnatprove = ">=2022.0.0"`;
    end Compiler;
 
    package Prove is
-      for Proof_Switches ("Ada") use ("--level=3", "--report=all", "--warnings=error");
+      for Proof_Switches ("Ada") use ("--level=4", "--report=all", "--warnings=error");
    end Prove;
 end Spark_Module;`;
 

@@ -93,8 +93,8 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     iconName: "ShieldCheck",
     defaultConfig: {
       mode: "auto",
-      proofLevel: 2,
-      timeoutSec: 15,
+      proofLevel: 4,
+      timeoutSec: 30,
       strictSubtypes: true,
       enforceContracts: true,
       checkNoHeap: true,

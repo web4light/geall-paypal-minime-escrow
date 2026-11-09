@@ -451,8 +451,8 @@ async function runRealGnatprove(
   }
 
   const startTime = Date.now();
-  const level = options.level ?? 2;
-  const timeoutSec = options.timeoutSec ?? 15;
+  const level = options.level ?? 4;
+  const timeoutSec = options.timeoutSec ?? 30;
 
   let tmpDir: string | null = null;
   let workDir: string;
@@ -1244,7 +1244,7 @@ Kód zformátuj do standardních Ada bloků.`;
     }
 
     const fullCodeToVerify = adsCode + "\n\n" + adbCode;
-    let verification = await runRealGnatprove(adsCode, adbCode, { level: 2 });
+    let verification = await runRealGnatprove(adsCode, adbCode, { level: 4 });
     if (!verification) {
       verification = verifySparkCode(fullCodeToVerify) as any;
     }
@@ -1303,7 +1303,7 @@ app.post("/api/workflow/execute", async (req, res) => {
           data: { prompt, model: node.data?.config?.model || "gemini-2.5-flash", status: "generated" },
         });
       } else if (node.type === "spark_verifier") {
-        const level = node.data?.config?.proofLevel ?? 2;
+        const level = node.data?.config?.proofLevel ?? 4;
         const mode = node.data?.config?.mode || "auto";
 
         if (mode !== "heuristic" && toolchain.available && toolchain.path) {

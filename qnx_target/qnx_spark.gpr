@@ -7,6 +7,6 @@ project QNX_Spark is
    end Compiler;
 
    package Prove is
-      for Proof_Switches ("Ada") use ("--level=2", "--report=all");
+      for Proof_Switches ("Ada") use ("--level=4", "--report=all");
    end Prove;
 end QNX_Spark;

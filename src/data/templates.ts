@@ -79,7 +79,7 @@ export const WORKFLOW_TEMPLATES: Workflow[] = [
           icon: "ShieldCheck",
           config: {
             mode: "auto",
-            proofLevel: 2,
+            proofLevel: 4,
             strictRules: true,
             checkPrePost: true,
             checkRangedTypes: true,
@@ -237,7 +237,7 @@ export const WORKFLOW_TEMPLATES: Workflow[] = [
           icon: "ShieldCheck",
           config: {
             mode: "auto",
-            proofLevel: 2,
+            proofLevel: 4,
             strictRules: true,
             checkPrePost: true,
             checkRangedTypes: true,
@@ -498,7 +498,7 @@ export const WORKFLOW_TEMPLATES: Workflow[] = [
           icon: "ShieldCheck",
           config: {
             mode: "auto",
-            proofLevel: 2,
+            proofLevel: 4,
             timeoutSec: 15,
           },
           status: "idle",

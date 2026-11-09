@@ -13,7 +13,7 @@ import { NodePalette } from "./components/NodePalette";
 export default function App() {
   // Workflow state
   const [currentWorkflow, setCurrentWorkflow] = useState<Workflow>(() => {
-    const saved = localStorage.getItem("geall_gallic_workflow_v3");
+    const saved = localStorage.getItem("geall_gallic_workflow_v4");
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -42,7 +42,7 @@ export default function App() {
 
   // Save workflow to localStorage on change
   useEffect(() => {
-    localStorage.setItem("geall_gallic_workflow_v3", JSON.stringify(currentWorkflow));
+    localStorage.setItem("geall_gallic_workflow_v4", JSON.stringify(currentWorkflow));
   }, [currentWorkflow]);
 
   // Node position update
@@ -225,7 +225,7 @@ export default function App() {
     code: string,
     adsCode?: string,
     adbCode?: string,
-    level: number = 2,
+    level: number = 4,
     mode: string = "auto",
     gprPath?: string
   ): Promise<VerificationResult | null> => {
@@ -418,7 +418,7 @@ end Message_Buffer;`;
             ? `${currentPayload.adsCode}\n\n${currentPayload.adbCode || ""}`
             : "pragma SPARK_Mode (On);\npackage Sample is end Sample;";
 
-          const level = node.data.config?.proofLevel ?? 2;
+          const level = node.data.config?.proofLevel ?? 4;
           const mode = node.data.config?.mode || "auto";
           const gprPath = node.data.config?.gprPath;
 
